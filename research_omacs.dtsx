@@ -1,0 +1,2429 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/15/2020 11:10:46 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LA31652"
+  DTS:CreatorName="UBHT_NT\WyattM"
+  DTS:DTSID="{47310421-F8C3-4CC4-B653-66BC7654A205}"
+  DTS:EnableConfig="True"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.128"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="67"
+  DTS:VersionGUID="{7AF5213D-03B9-424A-806F-A19AA547A207}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HDM Local]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C3835229-FF20-491D-9EB9-4E0DE5F5A69B}"
+      DTS:ObjectName="HDM Local">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=medwaybi\hdmsql;Initial Catalog=HDM_Local;Provider=SQLNCLI11.1;Integrated Security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Research]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6CD1B05C-D945-4791-AF45-BABA7C89FB58}"
+      DTS:ObjectName="Research">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=BIT_DEV;Initial Catalog=Research;Provider=SQLNCLI11.1;Integrated Security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Configurations>
+    <DTS:Configuration
+      DTS:ConfigurationString="C:\SSIS connections\research_omacs.dtsConfig"
+      DTS:ConfigurationType="1"
+      DTS:CreationName=""
+      DTS:DTSID="{4D7B2F2C-D129-46C9-B19B-74A9C358667C}"
+      DTS:ObjectName="Research" />
+  </DTS:Configurations>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9869F12C-B84D-4048-90A9-6CA9FAA916F3}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;exec  hdm_local.[dbo].[BIT_Research_OMACS]&#xA;&quot; + &quot;'&quot;+@[User::StartDate]+&quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCommand">
+      <DTS:VariableValue
+        DTS:DataType="8">exec  hdm_local.[dbo].[BIT_Research_OMACS]
+''</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EA2A9A94-EEB7-4B1C-AE24-E8A7CFB16165}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;exec [transform].[results_merge]&#xA;&quot; + &quot;'&quot;+@[User::StartDate]+&quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCommand1">
+      <DTS:VariableValue
+        DTS:DataType="8">exec [transform].[results_merge]
+''</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FD596203-2114-434B-AAA4-052D003FE9C8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="StartDate">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2CCFD7A0-0FB5-4628-87ED-877E92A8320C}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\BIT_DEV import"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="BIT_DEV import"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[import].[results]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\BIT_DEV import.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Research]"
+                  connectionManagerRefId="Package.ConnectionManagers[Research]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[FACT_RESULT_ID]"
+                      cachedDataType="i4"
+                      cachedName="FACT_RESULT_ID"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[FACT_RESULT_ID]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[FACT_RESULT_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[PAS_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="PAS_ID"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[PAS_ID]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[PAS_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[SPECIMEN_REF]"
+                      cachedDataType="wstr"
+                      cachedLength="35"
+                      cachedName="SPECIMEN_REF"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[SPECIMEN_REF]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[SPECIMEN_REF]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[TEST_DTTM]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="TEST_DTTM"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[TEST_DTTM]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[TEST_DTTM]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[RESULT_DTTM]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="RESULT_DTTM"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_DTTM]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RESULT_DTTM]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[INVESTIGATION_SHORT_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="INVESTIGATION_SHORT_NAME"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[INVESTIGATION_SHORT_NAME]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[INVESTIGATION_SHORT_NAME]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[INVESTIGATION_FULL_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="INVESTIGATION_FULL_NAME"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[INVESTIGATION_FULL_NAME]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[INVESTIGATION_FULL_NAME]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[TEST_SHORT_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="TEST_SHORT_NAME"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[TEST_SHORT_NAME]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[TEST_SHORT_NAME]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[TEST_FULL_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="TEST_FULL_NAME"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[TEST_FULL_NAME]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[TEST_FULL_NAME]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[DISCIPLINE_DESC]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="DISCIPLINE_DESC"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[DISCIPLINE_DESC]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[DISCIPLINE_DESC]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[VALUE]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="VALUE"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[VALUE]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[VALUE]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[RANGE]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="RANGE"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RANGE]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RANGE]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[UNITS]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="UNITS"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[UNITS]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[UNITS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[content]"
+                      cachedDataType="nText"
+                      cachedName="content"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[CONTENT]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[content]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[ABNORMAL_FLAG]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="ABNORMAL_FLAG"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[ABNORMAL_FLAG]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[ABNORMAL_FLAG]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[FINALISED_STATUS]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="FINALISED_STATUS"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[FINALISED_STATUS]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[FINALISED_STATUS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[RESULT_DETAIL_ORDER]"
+                      cachedDataType="i4"
+                      cachedName="RESULT_DETAIL_ORDER"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_DETAIL_ORDER]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RESULT_DETAIL_ORDER]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[DETAIL_COMMENTS]"
+                      cachedDataType="nText"
+                      cachedName="DETAIL_COMMENTS"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[DETAIL_COMMENTS]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[DETAIL_COMMENTS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[RESULT_LOCATION]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="RESULT_LOCATION"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_LOCATION]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RESULT_LOCATION]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[STATUS]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="STATUS"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[STATUS]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[STATUS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[detmodif]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="detmodif"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[DET_MODIF_DTTM]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[detmodif]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].Columns[resmodiF]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="resmodiF"
+                      externalMetadataColumnId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RES_MODIF_DTTM]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[resmodiF]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[FACT_RESULT_ID]"
+                      dataType="wstr"
+                      length="30"
+                      name="FACT_RESULT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[PAS_ID]"
+                      dataType="wstr"
+                      length="30"
+                      name="PAS_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[SPECIMEN_REF]"
+                      dataType="wstr"
+                      length="35"
+                      name="SPECIMEN_REF" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[TEST_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="TEST_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="RESULT_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[INVESTIGATION_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      name="INVESTIGATION_SHORT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[INVESTIGATION_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="INVESTIGATION_FULL_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[TEST_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      name="TEST_SHORT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[TEST_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="TEST_FULL_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[DISCIPLINE_DESC]"
+                      dataType="wstr"
+                      length="80"
+                      name="DISCIPLINE_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[VALUE]"
+                      dataType="wstr"
+                      length="200"
+                      name="VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RANGE]"
+                      dataType="wstr"
+                      length="30"
+                      name="RANGE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[UNITS]"
+                      dataType="wstr"
+                      length="40"
+                      name="UNITS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[CONTENT]"
+                      dataType="nText"
+                      name="CONTENT" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[ABNORMAL_FLAG]"
+                      dataType="wstr"
+                      length="1"
+                      name="ABNORMAL_FLAG" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[FINALISED_STATUS]"
+                      dataType="wstr"
+                      length="10"
+                      name="FINALISED_STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_DETAIL_ORDER]"
+                      dataType="i4"
+                      name="RESULT_DETAIL_ORDER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[DETAIL_COMMENTS]"
+                      dataType="nText"
+                      name="DETAIL_COMMENTS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_LOCATION]"
+                      dataType="wstr"
+                      length="1500"
+                      name="RESULT_LOCATION" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[STATUS]"
+                      dataType="wstr"
+                      length="128"
+                      name="STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[DET_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="DET_MODIF_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input].ExternalColumns[RES_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="RES_MODIF_DTTM" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\BIT_DEV import.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\BIT_DEV import.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\BIT_DEV import.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\BIT_DEV import.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\HDM_LOCAL_SOURCE"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="HDM_LOCAL_SOURCE"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[sd513813_source]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">exec  hdm_local.[dbo].[BIT_Research_OMACS]
+@date =  [User::SQLCommand]</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable">User::SQLCommand</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[HDM Local]"
+                  connectionManagerRefId="Package.ConnectionManagers[HDM Local]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[FACT_RESULT_ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[FACT_RESULT_ID]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[FACT_RESULT_ID]"
+                      name="FACT_RESULT_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[PAS_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[PAS_ID]"
+                      length="30"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[PAS_ID]"
+                      name="PAS_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[SPECIMEN_REF]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[SPECIMEN_REF]"
+                      length="35"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[SPECIMEN_REF]"
+                      name="SPECIMEN_REF"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[TEST_DTTM]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[TEST_DTTM]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[TEST_DTTM]"
+                      name="TEST_DTTM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RESULT_DTTM]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[RESULT_DTTM]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RESULT_DTTM]"
+                      name="RESULT_DTTM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[INVESTIGATION_SHORT_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[INVESTIGATION_SHORT_NAME]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[INVESTIGATION_SHORT_NAME]"
+                      name="INVESTIGATION_SHORT_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[INVESTIGATION_FULL_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[INVESTIGATION_FULL_NAME]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[INVESTIGATION_FULL_NAME]"
+                      name="INVESTIGATION_FULL_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[TEST_SHORT_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[TEST_SHORT_NAME]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[TEST_SHORT_NAME]"
+                      name="TEST_SHORT_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[TEST_FULL_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[TEST_FULL_NAME]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[TEST_FULL_NAME]"
+                      name="TEST_FULL_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[DISCIPLINE_DESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[DISCIPLINE_DESC]"
+                      length="80"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[DISCIPLINE_DESC]"
+                      name="DISCIPLINE_DESC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[VALUE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[VALUE]"
+                      length="200"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[VALUE]"
+                      name="VALUE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RANGE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[RANGE]"
+                      length="30"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RANGE]"
+                      name="RANGE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[UNITS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[UNITS]"
+                      length="40"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[UNITS]"
+                      name="UNITS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[content]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[content]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[content]"
+                      name="content"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[ABNORMAL_FLAG]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[ABNORMAL_FLAG]"
+                      length="1"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[ABNORMAL_FLAG]"
+                      name="ABNORMAL_FLAG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[FINALISED_STATUS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[FINALISED_STATUS]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[FINALISED_STATUS]"
+                      name="FINALISED_STATUS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RESULT_DETAIL_ORDER]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[RESULT_DETAIL_ORDER]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RESULT_DETAIL_ORDER]"
+                      name="RESULT_DETAIL_ORDER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[DETAIL_COMMENTS]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[DETAIL_COMMENTS]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[DETAIL_COMMENTS]"
+                      name="DETAIL_COMMENTS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RESULT_LOCATION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[RESULT_LOCATION]"
+                      length="1500"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[RESULT_LOCATION]"
+                      name="RESULT_LOCATION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[STATUS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[STATUS]"
+                      length="128"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[STATUS]"
+                      name="STATUS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[detmodif]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[detmodif]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[detmodif]"
+                      name="detmodif"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[resmodiF]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[resmodiF]"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].Columns[resmodiF]"
+                      name="resmodiF"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[FACT_RESULT_ID]"
+                      dataType="i4"
+                      name="FACT_RESULT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[PAS_ID]"
+                      dataType="wstr"
+                      length="30"
+                      name="PAS_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[SPECIMEN_REF]"
+                      dataType="wstr"
+                      length="35"
+                      name="SPECIMEN_REF" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[TEST_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="TEST_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[RESULT_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="RESULT_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[INVESTIGATION_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      name="INVESTIGATION_SHORT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[INVESTIGATION_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="INVESTIGATION_FULL_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[TEST_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      name="TEST_SHORT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[TEST_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="TEST_FULL_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[DISCIPLINE_DESC]"
+                      dataType="wstr"
+                      length="80"
+                      name="DISCIPLINE_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[VALUE]"
+                      dataType="wstr"
+                      length="200"
+                      name="VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[RANGE]"
+                      dataType="wstr"
+                      length="30"
+                      name="RANGE" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[UNITS]"
+                      dataType="wstr"
+                      length="40"
+                      name="UNITS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[content]"
+                      dataType="nText"
+                      name="content" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[ABNORMAL_FLAG]"
+                      dataType="wstr"
+                      length="1"
+                      name="ABNORMAL_FLAG" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[FINALISED_STATUS]"
+                      dataType="wstr"
+                      length="10"
+                      name="FINALISED_STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[RESULT_DETAIL_ORDER]"
+                      dataType="i4"
+                      name="RESULT_DETAIL_ORDER" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[DETAIL_COMMENTS]"
+                      dataType="nText"
+                      name="DETAIL_COMMENTS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[RESULT_LOCATION]"
+                      dataType="wstr"
+                      length="1500"
+                      name="RESULT_LOCATION" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[STATUS]"
+                      dataType="wstr"
+                      length="128"
+                      name="STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[detmodif]"
+                      dataType="dbTimeStamp"
+                      name="detmodif" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output].ExternalColumns[resmodiF]"
+                      dataType="dbTimeStamp"
+                      name="resmodiF" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[FACT_RESULT_ID]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[FACT_RESULT_ID]"
+                      name="FACT_RESULT_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[PAS_ID]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[PAS_ID]"
+                      name="PAS_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[SPECIMEN_REF]"
+                      dataType="wstr"
+                      length="35"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[SPECIMEN_REF]"
+                      name="SPECIMEN_REF" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[TEST_DTTM]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[TEST_DTTM]"
+                      name="TEST_DTTM" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[RESULT_DTTM]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[RESULT_DTTM]"
+                      name="RESULT_DTTM" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[INVESTIGATION_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[INVESTIGATION_SHORT_NAME]"
+                      name="INVESTIGATION_SHORT_NAME" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[INVESTIGATION_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[INVESTIGATION_FULL_NAME]"
+                      name="INVESTIGATION_FULL_NAME" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[TEST_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[TEST_SHORT_NAME]"
+                      name="TEST_SHORT_NAME" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[TEST_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[TEST_FULL_NAME]"
+                      name="TEST_FULL_NAME" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[DISCIPLINE_DESC]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[DISCIPLINE_DESC]"
+                      name="DISCIPLINE_DESC" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[VALUE]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[VALUE]"
+                      name="VALUE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[RANGE]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[RANGE]"
+                      name="RANGE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[UNITS]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[UNITS]"
+                      name="UNITS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[content]"
+                      dataType="nText"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[content]"
+                      name="content" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[ABNORMAL_FLAG]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[ABNORMAL_FLAG]"
+                      name="ABNORMAL_FLAG" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[FINALISED_STATUS]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[FINALISED_STATUS]"
+                      name="FINALISED_STATUS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[RESULT_DETAIL_ORDER]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[RESULT_DETAIL_ORDER]"
+                      name="RESULT_DETAIL_ORDER" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[DETAIL_COMMENTS]"
+                      dataType="nText"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[DETAIL_COMMENTS]"
+                      name="DETAIL_COMMENTS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[RESULT_LOCATION]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[RESULT_LOCATION]"
+                      name="RESULT_LOCATION" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[STATUS]"
+                      dataType="wstr"
+                      length="128"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[STATUS]"
+                      name="STATUS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[detmodif]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[detmodif]"
+                      name="detmodif" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[resmodiF]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[resmodiF]"
+                      name="resmodiF" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task\BIT_DEV import.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task\HDM_LOCAL_SOURCE.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\delete no result rows"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0D92FE51-4D77-4F57-B2E8-1F729EC08366}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="delete no result rows"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6CD1B05C-D945-4791-AF45-BABA7C89FB58}"
+          SQLTask:SqlStatementSource="DELETE [transform].[results]&#xA;WHERE DETAIL_COMMENTS IN ('No result','Not Required')" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\import to transform"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{513585E0-E619-4AED-81F0-2684B87AC96E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="import to transform"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\import to transform\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[transform].[results]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\import to transform\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Research]"
+                  connectionManagerRefId="Package.ConnectionManagers[Research]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FACT_RESULT_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="FACT_RESULT_ID"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FACT_RESULT_ID]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[FACT_RESULT_ID]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PAS_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="PAS_ID"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PAS_ID]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[PAS_ID]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SPECIMEN_REF]"
+                      cachedDataType="wstr"
+                      cachedLength="35"
+                      cachedName="SPECIMEN_REF"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SPECIMEN_REF]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[SPECIMEN_REF]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TEST_DTTM]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="TEST_DTTM"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_DTTM]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DTTM]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RESULT_DTTM]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="RESULT_DTTM"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_DTTM]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RESULT_DTTM]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[INVESTIGATION_SHORT_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="INVESTIGATION_SHORT_NAME"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVESTIGATION_SHORT_NAME]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[INVESTIGATION_SHORT_NAME]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[INVESTIGATION_FULL_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="INVESTIGATION_FULL_NAME"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVESTIGATION_FULL_NAME]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[INVESTIGATION_FULL_NAME]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TEST_SHORT_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="TEST_SHORT_NAME"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_SHORT_NAME]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_SHORT_NAME]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TEST_FULL_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="TEST_FULL_NAME"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_FULL_NAME]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_FULL_NAME]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DISCIPLINE_DESC]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="DISCIPLINE_DESC"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DISCIPLINE_DESC]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[DISCIPLINE_DESC]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[VALUE]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="VALUE"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VALUE]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[VALUE]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RANGE]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="RANGE"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RANGE]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RANGE]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[UNITS]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="UNITS"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UNITS]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[UNITS]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CONTENT]"
+                      cachedDataType="nText"
+                      cachedName="CONTENT"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTENT]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTENT]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ABNORMAL_FLAG]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="ABNORMAL_FLAG"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ABNORMAL_FLAG]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[ABNORMAL_FLAG]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FINALISED_STATUS]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="FINALISED_STATUS"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FINALISED_STATUS]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[FINALISED_STATUS]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RESULT_DETAIL_ORDER]"
+                      cachedDataType="i4"
+                      cachedName="RESULT_DETAIL_ORDER"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_DETAIL_ORDER]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RESULT_DETAIL_ORDER]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DETAIL_COMMENTS]"
+                      cachedDataType="nText"
+                      cachedName="DETAIL_COMMENTS"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DETAIL_COMMENTS]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[DETAIL_COMMENTS]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RESULT_LOCATION]"
+                      cachedDataType="wstr"
+                      cachedLength="1500"
+                      cachedName="RESULT_LOCATION"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_LOCATION]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RESULT_LOCATION]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[STATUS]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="STATUS"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STATUS]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[STATUS]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DET_MODIF_DTTM]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DET_MODIF_DTTM"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DET_MODIF_DTTM]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[DET_MODIF_DTTM]" />
+                    <inputColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RES_MODIF_DTTM]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="RES_MODIF_DTTM"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RES_MODIF_DTTM]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RES_MODIF_DTTM]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FACT_RESULT_ID]"
+                      dataType="wstr"
+                      length="30"
+                      name="FACT_RESULT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PAS_ID]"
+                      dataType="wstr"
+                      length="30"
+                      name="PAS_ID" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SPECIMEN_REF]"
+                      dataType="wstr"
+                      length="35"
+                      name="SPECIMEN_REF" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="TEST_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="RESULT_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVESTIGATION_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      name="INVESTIGATION_SHORT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[INVESTIGATION_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="INVESTIGATION_FULL_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      name="TEST_SHORT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TEST_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="TEST_FULL_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DISCIPLINE_DESC]"
+                      dataType="wstr"
+                      length="80"
+                      name="DISCIPLINE_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VALUE]"
+                      dataType="wstr"
+                      length="200"
+                      name="VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RANGE]"
+                      dataType="wstr"
+                      length="30"
+                      name="RANGE" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UNITS]"
+                      dataType="wstr"
+                      length="40"
+                      name="UNITS" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONTENT]"
+                      dataType="nText"
+                      name="CONTENT" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ABNORMAL_FLAG]"
+                      dataType="wstr"
+                      length="1"
+                      name="ABNORMAL_FLAG" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FINALISED_STATUS]"
+                      dataType="wstr"
+                      length="10"
+                      name="FINALISED_STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_DETAIL_ORDER]"
+                      dataType="i4"
+                      name="RESULT_DETAIL_ORDER" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DETAIL_COMMENTS]"
+                      dataType="nText"
+                      name="DETAIL_COMMENTS" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RESULT_LOCATION]"
+                      dataType="wstr"
+                      length="1500"
+                      name="RESULT_LOCATION" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[STATUS]"
+                      dataType="wstr"
+                      length="128"
+                      name="STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DET_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="DET_MODIF_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RES_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="RES_MODIF_DTTM" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\import to transform\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\import to transform\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\import to transform\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\import to transform\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[import].[results]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\import to transform\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Research]"
+                  connectionManagerRefId="Package.ConnectionManagers[Research]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[FACT_RESULT_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FACT_RESULT_ID]"
+                      length="30"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[FACT_RESULT_ID]"
+                      name="FACT_RESULT_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[PAS_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PAS_ID]"
+                      length="30"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[PAS_ID]"
+                      name="PAS_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[SPECIMEN_REF]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SPECIMEN_REF]"
+                      length="35"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[SPECIMEN_REF]"
+                      name="SPECIMEN_REF"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DTTM]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_DTTM]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_DTTM]"
+                      name="TEST_DTTM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RESULT_DTTM]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RESULT_DTTM]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RESULT_DTTM]"
+                      name="RESULT_DTTM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[INVESTIGATION_SHORT_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[INVESTIGATION_SHORT_NAME]"
+                      length="10"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[INVESTIGATION_SHORT_NAME]"
+                      name="INVESTIGATION_SHORT_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[INVESTIGATION_FULL_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[INVESTIGATION_FULL_NAME]"
+                      length="100"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[INVESTIGATION_FULL_NAME]"
+                      name="INVESTIGATION_FULL_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_SHORT_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_SHORT_NAME]"
+                      length="10"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_SHORT_NAME]"
+                      name="TEST_SHORT_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_FULL_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_FULL_NAME]"
+                      length="100"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[TEST_FULL_NAME]"
+                      name="TEST_FULL_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[DISCIPLINE_DESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DISCIPLINE_DESC]"
+                      length="80"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[DISCIPLINE_DESC]"
+                      name="DISCIPLINE_DESC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[VALUE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[VALUE]"
+                      length="200"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[VALUE]"
+                      name="VALUE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RANGE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RANGE]"
+                      length="30"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RANGE]"
+                      name="RANGE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[UNITS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UNITS]"
+                      length="40"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[UNITS]"
+                      name="UNITS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTENT]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CONTENT]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[CONTENT]"
+                      name="CONTENT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[ABNORMAL_FLAG]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ABNORMAL_FLAG]"
+                      length="1"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[ABNORMAL_FLAG]"
+                      name="ABNORMAL_FLAG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[FINALISED_STATUS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FINALISED_STATUS]"
+                      length="10"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[FINALISED_STATUS]"
+                      name="FINALISED_STATUS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RESULT_DETAIL_ORDER]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RESULT_DETAIL_ORDER]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RESULT_DETAIL_ORDER]"
+                      name="RESULT_DETAIL_ORDER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[DETAIL_COMMENTS]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DETAIL_COMMENTS]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[DETAIL_COMMENTS]"
+                      name="DETAIL_COMMENTS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RESULT_LOCATION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RESULT_LOCATION]"
+                      length="1500"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RESULT_LOCATION]"
+                      name="RESULT_LOCATION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[STATUS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STATUS]"
+                      length="128"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[STATUS]"
+                      name="STATUS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[DET_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DET_MODIF_DTTM]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[DET_MODIF_DTTM]"
+                      name="DET_MODIF_DTTM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RES_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RES_MODIF_DTTM]"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].Columns[RES_MODIF_DTTM]"
+                      name="RES_MODIF_DTTM"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FACT_RESULT_ID]"
+                      dataType="wstr"
+                      length="30"
+                      name="FACT_RESULT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PAS_ID]"
+                      dataType="wstr"
+                      length="30"
+                      name="PAS_ID" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SPECIMEN_REF]"
+                      dataType="wstr"
+                      length="35"
+                      name="SPECIMEN_REF" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="TEST_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RESULT_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="RESULT_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[INVESTIGATION_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      name="INVESTIGATION_SHORT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[INVESTIGATION_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="INVESTIGATION_FULL_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      name="TEST_SHORT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TEST_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="TEST_FULL_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DISCIPLINE_DESC]"
+                      dataType="wstr"
+                      length="80"
+                      name="DISCIPLINE_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[VALUE]"
+                      dataType="wstr"
+                      length="200"
+                      name="VALUE" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RANGE]"
+                      dataType="wstr"
+                      length="30"
+                      name="RANGE" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UNITS]"
+                      dataType="wstr"
+                      length="40"
+                      name="UNITS" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CONTENT]"
+                      dataType="nText"
+                      name="CONTENT" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ABNORMAL_FLAG]"
+                      dataType="wstr"
+                      length="1"
+                      name="ABNORMAL_FLAG" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FINALISED_STATUS]"
+                      dataType="wstr"
+                      length="10"
+                      name="FINALISED_STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RESULT_DETAIL_ORDER]"
+                      dataType="i4"
+                      name="RESULT_DETAIL_ORDER" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DETAIL_COMMENTS]"
+                      dataType="nText"
+                      name="DETAIL_COMMENTS" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RESULT_LOCATION]"
+                      dataType="wstr"
+                      length="1500"
+                      name="RESULT_LOCATION" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[STATUS]"
+                      dataType="wstr"
+                      length="128"
+                      name="STATUS" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DET_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="DET_MODIF_DTTM" />
+                    <externalMetadataColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[RES_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      name="RES_MODIF_DTTM" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FACT_RESULT_ID]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FACT_RESULT_ID]"
+                      name="FACT_RESULT_ID" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PAS_ID]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PAS_ID]"
+                      name="PAS_ID" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SPECIMEN_REF]"
+                      dataType="wstr"
+                      length="35"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SPECIMEN_REF]"
+                      name="SPECIMEN_REF" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_DTTM]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_DTTM]"
+                      name="TEST_DTTM" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RESULT_DTTM]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RESULT_DTTM]"
+                      name="RESULT_DTTM" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[INVESTIGATION_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[INVESTIGATION_SHORT_NAME]"
+                      name="INVESTIGATION_SHORT_NAME" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[INVESTIGATION_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[INVESTIGATION_FULL_NAME]"
+                      name="INVESTIGATION_FULL_NAME" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_SHORT_NAME]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_SHORT_NAME]"
+                      name="TEST_SHORT_NAME" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_FULL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TEST_FULL_NAME]"
+                      name="TEST_FULL_NAME" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DISCIPLINE_DESC]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DISCIPLINE_DESC]"
+                      name="DISCIPLINE_DESC" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[VALUE]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[VALUE]"
+                      name="VALUE" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RANGE]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RANGE]"
+                      name="RANGE" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UNITS]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UNITS]"
+                      name="UNITS" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CONTENT]"
+                      dataType="nText"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CONTENT]"
+                      name="CONTENT" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ABNORMAL_FLAG]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ABNORMAL_FLAG]"
+                      name="ABNORMAL_FLAG" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FINALISED_STATUS]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FINALISED_STATUS]"
+                      name="FINALISED_STATUS" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RESULT_DETAIL_ORDER]"
+                      dataType="i4"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RESULT_DETAIL_ORDER]"
+                      name="RESULT_DETAIL_ORDER" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DETAIL_COMMENTS]"
+                      dataType="nText"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DETAIL_COMMENTS]"
+                      name="DETAIL_COMMENTS" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RESULT_LOCATION]"
+                      dataType="wstr"
+                      length="1500"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RESULT_LOCATION]"
+                      name="RESULT_LOCATION" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STATUS]"
+                      dataType="wstr"
+                      length="128"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[STATUS]"
+                      name="STATUS" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DET_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DET_MODIF_DTTM]"
+                      name="DET_MODIF_DTTM" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RES_MODIF_DTTM]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[RES_MODIF_DTTM]"
+                      name="RES_MODIF_DTTM" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\import to transform.Paths[OLE DB Source Output]"
+              endId="Package\import to transform\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\import to transform\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\merge results data"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{CDB655CE-7BC3-4144-A037-ADC94C555193}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="merge results data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6CD1B05C-D945-4791-AF45-BABA7C89FB58}"
+          SQLTask:SqlStatementSource="exec [transform].[results_merge]  &#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate import results BIT DEV"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{57ACA26D-E598-4474-B3F6-8CA11BEDF9A7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate import results BIT DEV"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6CD1B05C-D945-4791-AF45-BABA7C89FB58}"
+          SQLTask:SqlStatementSource="Truncate table [import].[results]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate transform table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D4738D4C-000A-457C-BEB6-8FE7CCAE77D3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate transform table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6CD1B05C-D945-4791-AF45-BABA7C89FB58}"
+          SQLTask:SqlStatementSource="truncate table [transform].[results]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\variable start date &amp; update result date table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7443C05A-2873-445C-A3AD-9EDA6BB0E5B6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="variable start date &amp; update result date table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6CD1B05C-D945-4791-AF45-BABA7C89FB58}"
+          SQLTask:SqlStatementSource="EXEC [import].[results_start_date_variable]"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="StartDate"
+            SQLTask:DtsVariableName="User::StartDate" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{DCA9B8B4-9F23-49BA-9764-C397A5F814BE}"
+      DTS:From="Package\truncate import results BIT DEV"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\variable start date &amp; update result date table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{D3E23093-C368-4A9C-897F-F228DCEDE2C7}"
+      DTS:From="Package\Data Flow Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Truncate transform table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{1AA5CFED-8438-4B98-AE9D-C1D0D8ADE62C}"
+      DTS:From="Package\Truncate transform table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\import to transform" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{9E79689E-533B-44E4-A17C-7D6FE9095D0D}"
+      DTS:From="Package\import to transform"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\delete no result rows" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{637AC05E-5956-4A69-8B07-DE4118EFB04E}"
+      DTS:From="Package\variable start date &amp; update result date table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Data Flow Task" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{F4571045-70F8-4464-A6EA-A7DFE3F768FB}"
+      DTS:From="Package\delete no result rows"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\merge results data" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="152,42.6666666666667"
+          Id="Package\Data Flow Task"
+          TopLeft="127.499998100102,133.899997605682" />
+        <NodeLayout
+          Size="157.333333333334,42.6666666666667"
+          Id="Package\delete no result rows"
+          TopLeft="315.624995296821,233.999995815754" />
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\import to transform"
+          TopLeft="120.499998286367,249.24999564141" />
+        <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\merge results data"
+          TopLeft="489.374992707745,230.749995873869" />
+        <NodeLayout
+          Size="185.333333333334,42"
+          Id="Package\truncate import results BIT DEV"
+          TopLeft="106.874998407438,6.15000010460616" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\Truncate transform table"
+          TopLeft="114.37499829568,196.299996489883" />
+        <NodeLayout
+          Size="252.666666666667,42.6666666666667"
+          Id="Package\variable start date &amp; update result date table"
+          TopLeft="75.6249988730999,68.899998767972" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="106.874998407438,27.1500001046062">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="95.0833337989948,41.7499986633658"
+              Start="0,0"
+              End="95.0833337989948,34.2499986633658">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="91.0833337989948,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="91.0833337989948,0"
+                    Point2="95.0833337989948,0"
+                    Point3="95.0833337989948,4" />
+                  <mssgle:LineSegment
+                    End="95.0833337989948,34.2499986633658" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="279.499998100102,155.233330939015">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.208333528911,62.399998884201"
+              Start="0,0"
+              End="15.708333528911,62.399998884201">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="26.708333528911,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26.708333528911,0"
+                    Point2="30.708333528911,0"
+                    Point3="30.708333528911,4" />
+                  <mssgle:LineSegment
+                    End="30.708333528911,58.399998884201" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30.708333528911,58.399998884201"
+                    Point2="30.708333528911,62.399998884201"
+                    Point3="26.708333528911,62.399998884201" />
+                  <mssgle:LineSegment
+                    End="15.708333528911,62.399998884201" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="114.37499829568,217.633329823216">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="6.12499999068687,52.949999151527"
+              Start="0,0"
+              End="-1.37500000931313,52.949999151527">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5,0"
+                    Point2="-22.5,0"
+                    Point3="-22.5,4" />
+                  <mssgle:LineSegment
+                    End="-22.5,48.949999151527" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.5,48.949999151527"
+                    Point2="-22.5,52.949999151527"
+                    Point3="-18.5,52.949999151527" />
+                  <mssgle:LineSegment
+                    End="-1.37500000931313,52.949999151527" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="292.499998286367,270.583328974743">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="23.1249970104544,-15.2499998256558"
+              Start="0,0"
+              End="15.6249970104544,-15.2499998256558">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="7.56249850522718,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="7.56249850522718,0"
+                    Point2="11.5624985052272,0"
+                    Point3="11.5624985052272,-4" />
+                  <mssgle:LineSegment
+                    End="11.5624985052272,-11.2499998256558" />
+                  <mssgle:CubicBezierSegment
+                    Point1="11.5624985052272,-11.2499998256558"
+                    Point2="11.5624985052272,-15.2499998256558"
+                    Point3="15.5624985052272,-15.2499998256558" />
+                  <mssgle:LineSegment
+                    End="15.6249970104544,-15.2499998256558" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="201.958332206433,111.566665434639">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="77.5416658936689,37.8888877265989"
+              Start="0,0"
+              End="70.0416658936689,37.8888877265989">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.8888877265989" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.8888877265989"
+                    Point2="0,37.8888877265989"
+                    Point3="4,37.8888877265989" />
+                  <mssgle:LineSegment
+                    End="70.0416658936689,37.8888877265989" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="394.291661963488,276.666662482421">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="179.083330744257,-3.24999994188568"
+              Start="0,0"
+              End="179.083330744257,4.25000005811432">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.5"
+                    Point2="0,22.5"
+                    Point3="4,22.5" />
+                  <mssgle:LineSegment
+                    End="175.083330744257,22.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="175.083330744257,22.5"
+                    Point2="179.083330744257,22.5"
+                    Point3="179.083330744257,18.5" />
+                  <mssgle:LineSegment
+                    End="179.083330744257,4.25000005811432" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Ref: 513813&#xA;Owner; Mike Wyatt&#xA;Date: 15/10/2020&#xD;&#xA;Description: Import OMACS data from Medway to&#xD;&#xA; BIT_DEV (net change) . USes GDE HDM_LOCAL"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="293.333333333334,104"
+          Id="d12e6821-3459-4101-8035-7075791ff6f1"
+          TopLeft="387.041661535079,79.2999985820055" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <ConnectionManager
+    design-time-name="Package.ConnectionManagers[HDM Local]">
+    <DataSourceID>HDM Local</DataSourceID>
+  </ConnectionManager>
+  <ConnectionManager
+    design-time-name="Package.ConnectionManagers[Research]">
+    <DataSourceID>Research</DataSourceID>
+  </ConnectionManager>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\Data Flow Task\BIT_DEV import"
+          TopLeft="122.499998174608,109.849998035729" />
+        <NodeLayout
+          Size="184,42.6666666666667"
+          Id="Package\Data Flow Task\HDM_LOCAL_SOURCE"
+          TopLeft="99.9999985098839,24.0499995699525" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="191.999998509884,66.7166662366191">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.49999966472376,43.1333317991098"
+              Start="0,0"
+              End="8.49999966472376,35.6333317991098">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5666658995549" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.5666658995549"
+                    Point2="0,21.5666658995549"
+                    Point3="4,21.5666658995549" />
+                  <mssgle:LineSegment
+                    End="4.49999966472376,21.5666658995549" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.49999966472376,21.5666658995549"
+                    Point2="8.49999966472376,21.5666658995549"
+                    Point3="8.49999966472376,25.5666658995549" />
+                  <mssgle:LineSegment
+                    End="8.49999966472376,35.6333317991098" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\BIT_DEV import">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\HDM_LOCAL_SOURCE">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\import to transform">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="172,42.6666666666667"
+          Id="Package\import to transform\OLE DB Destination"
+          TopLeft="186,249" />
+        <NodeLayout
+          Size="196,58.6666666666667"
+          Id="Package\import to transform\OLE DB Source"
+          TopLeft="173,75" />
+        <EdgeLayout
+          Id="Package\import to transform.Paths[OLE DB Source Output]"
+          TopLeft="271.5,133.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,115.333333333333"
+              Start="0,0"
+              End="0,107.833333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,107.833333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\import to transform\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\import to transform\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
